@@ -1,23 +1,23 @@
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
-/*  SHA simple, understanding SHA                                         (c) Bob van Luijt 2015  */
+/*  RSA simple, understanding RSA                                         (c) Bob van Luijt 2015  */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
 'use strict';
 
 /**
- * SHA hash function reference implementation.
+ * RSA hash function reference implementation.
  *
  * @namespace
  */
-var SHA = {};
+var RSA = {};
 
 /**
- * Generates an SHA hash
+ * Generates an RSA hash
  * https://en.wikipedia.org/wiki/RSA_(cryptosystem)#A_working_example
  *
- * @returns {array} Result of sha generation
+ * @returns {array} Result of RSA generation
  */
-SHA.generate = function(){
+RSA.generate = function(){
     /**
      * Calculate modular multiplicative inverse.
      * https://en.wikipedia.org/wiki/Modular_multiplicative_inverse
@@ -79,11 +79,11 @@ SHA.generate = function(){
  * Uses BigInteger.js https://peterolson.github.com/BigInteger.js
  *
  * @param   {m} int, the 'message' to be encoded
- * @param   {n} int, n value returned from generate_sha() aka public key (part I)
- * @param   {e} int, e value returned from generate_sha() aka public key (part II)
+ * @param   {n} int, n value returned from generate_rsa() aka public key (part I)
+ * @param   {e} int, e value returned from generate_rsa() aka public key (part II)
  * @returns {int} encrypted hash
  */
-SHA.encrypt = function(m, n, e){
+RSA.encrypt = function(m, n, e){
 	return bigInt(m).pow(e).mod(n);   
 };
 
@@ -91,11 +91,11 @@ SHA.encrypt = function(m, n, e){
  * Decrypt
  * Uses BigInteger.js https://peterolson.github.com/BigInteger.js
  *
- * @param   {mEnc} int, the 'message' to be decoded (encoded with SHA_encrypt())
- * @param   {d} int, d value returned from generate_sha() aka private key
- * @param   {n} int, n value returned from generate_sha() aka public key (part I)
+ * @param   {mEnc} int, the 'message' to be decoded (encoded with RSA_encrypt())
+ * @param   {d} int, d value returned from generate_rsa() aka private key
+ * @param   {n} int, n value returned from generate_rsa() aka public key (part I)
  * @returns {int} decrypted hash
  */
-SHA.decrypt = function(mEnc, d, n){
+RSA.decrypt = function(mEnc, d, n){
 	return bigInt(mEnc).pow(d).mod(n);   
 };

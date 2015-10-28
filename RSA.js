@@ -1,5 +1,5 @@
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
-/*  RSA simple, understanding RSA                                         (c) Bob van Luijt 2015  */
+/*  RSA simple                                                            (c) Bob van Luijt 2015  */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
 'use strict';
@@ -28,12 +28,16 @@ RSA.generate = function(){
      * @returns {int} Result of modular multiplicative inverse.
      */
     function modular_multiplicative_inverse(a, n){
-        if (n < 0){ n = -n; }
-        if (a < 0){ a = n - (-a % n); }
-    	var t  = 0;
-        var nt = 1;
-        var r  = n;
-        var nr = a % n;
+    	var t  = 0,
+            nt = 1,
+            r  = n,
+            nr = a % n;
+        if (n < 0){
+        	n = -n;
+        }
+        if (a < 0){
+        	a = n - (-a % n);
+        }
     	while (nr !== 0) {
     		var quot= (r/nr) | 0;
     		var tmp = nt;  nt = t - quot*nt;  t = tmp;
@@ -61,12 +65,12 @@ RSA.generate = function(){
     }
 
     // generate values
-    var p = random_prime(1, 255); // 8 bit
-    var q = random_prime(1, 255); // 8 bit
-    var n = p * q;
-    var t = (p - 1) * (q - 1); // totient as φ(n) = (p − 1)(q − 1)
-    var e = random_prime(1, t);
-    var d = modular_multiplicative_inverse(e, t);
+    var p = random_prime(1, 255), // 8 bit
+        q = random_prime(1, 255), // 8 bit
+        n = p * q,
+        t = (p - 1) * (q - 1), // totient as φ(n) = (p − 1)(q − 1)
+        e = random_prime(1, t),
+        d = modular_multiplicative_inverse(e, t);
     return {
     	n: n, // public key (part I)
         e: e, // public key (part II)

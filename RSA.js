@@ -69,8 +69,8 @@ RSA.generate = function(){
         q = random_prime(1, 255), // 8 bit
         n = p * q,
         t = (p - 1) * (q - 1), // totient as φ(n) = (p − 1)(q − 1)
-        d = random_prime(1, t),
-        e = modular_multiplicative_inverse(d, t);
+        e = random_prime(1, t),
+        d = modular_multiplicative_inverse(e, t);
     return {
     	n: n, // public key (part I)
         e: e, // public key (part II)
